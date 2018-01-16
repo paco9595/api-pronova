@@ -5,8 +5,8 @@ var secret = "Clavesecreta"
 exports.creatToken = function(user){
     var payload = {
         _id: user._id,
-        name: user.name,
-        surname: user.surname,
+        nombre: user.nombre,
+        apellido: user.apellido,
         email: user.email,
         rol: user.rol,
         image: user.image,

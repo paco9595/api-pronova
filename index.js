@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var app = require("./app.js");
 var port = process.env.PORT || 3977;
-mongoose.connect('mongodb://localhost:27017/mongoMusic',(err,res)=>{
+mongoose.connect('mongodb://localhost:27017/pronova',(err,res)=>{
     if(err){
         throw err;
     }else{

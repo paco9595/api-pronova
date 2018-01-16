@@ -36,14 +36,11 @@ function login(req,res){
     })
 }
 function creat(req,res){
-    var user = new User();
     var params = req.body;
-    if(!params.name || !params.surname || !params.email || !params.password){
+    if(!params.nombre || !params.apellido || !params.email || !params.password){
         return res.status(400).send({msg:"datos insuficentes"})
     }
-    user.name = params.name;
-    user.surname = params.surname;
-    user.email = params.email;
+    var user = new User(params);
     user.rol = 'user';
     user.image = 'null';
     bcrypt.hash(params.password,null,null,(err,hash)=>{
@@ -100,6 +97,7 @@ function updateUser(req,res){
         user.password = bcrypt.hashSync(params.password,null)
         console.log(user.password)
     }
+    console.log(user)
     User.findByIdAndUpdate(userId,user,(err,userUpdate)=>{
         if(err){
             return res.status(500).send({msg:err.message})
