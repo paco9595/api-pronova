@@ -15,7 +15,7 @@ api.get('/login',userController.login)
 api.post('/creat',userController.creat)
 api.put('/updateImage/:id',[md_auth_user.UserAuth,md_update],userController.updateImage)
 api.put('/updateUser/:id',md_auth_user.UserAuth,userController.updateUser)
-api.delete('/deleteUser/:id',md_auth_user.UserAuth,userController.deleteUser)
+api.delete('/deleteUser/:id',md_auth_admin.adminAuth,userController.deleteUser)
 
 
 module.exports = api

@@ -75,7 +75,6 @@ function updateImage(req,res){
     var file_split = file_path.split('\\')
     var file_name = file_split[file_split.length-1]
     var file_ext = file_name.split('\.')[1]
-    console.log(file_ext);
     if(file_ext !== 'jpg' && file_ext !== 'png' && file_ext !=='gif'){
         return res.status(200).send({msg:"imgaen con formato incorrecto"})
     }
@@ -95,9 +94,7 @@ function updateUser(req,res){
     var user_id = userId
     if(params.password){
         user.password = bcrypt.hashSync(params.password,null)
-        console.log(user.password)
     }
-    console.log(user)
     User.findByIdAndUpdate(userId,user,(err,userUpdate)=>{
         if(err){
             return res.status(500).send({msg:err.message})
