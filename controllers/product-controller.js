@@ -7,7 +7,6 @@ function prueba(req,res){
 }
 function productos(req,res){
     var params = req.query
-    console.log(params)
     if(params.tipo !=="case" && params.tipo !=='mica' && params.tipo !=='accesorio'){
         return res.status(400).send({msg:"bad request"})
     }
@@ -52,8 +51,9 @@ function deleteProduct(req,res){
 }
 function updateProduct(req,res){
     var productId = req.params.id
-    var params = req.query
-    var product = new Product(parmas)
+    var params = req.body
+    console.log(params)
+    var product = new Product(params)
     product._id = productId
     Product.findByIdAndUpdate(productId,product,(err,productUpdate)=>{
         if(err){
@@ -65,10 +65,31 @@ function updateProduct(req,res){
         res.status(200).send({msg:"producto actualizado",producto:productUpdate})
     })
 }
+function updateProductImagen(req,res){
+    var productId = req.params.id;
+    var file_name = "Sin Imagen"
+    if (!req.files){
+        return res.status(400).send({msg:"imagen no encontrada"})
+    }
+    var file_path = req.files.image.path;
+    var file_split = file_path.split('\\')
+    var file_name = file_split[file_split.length-1]
+    var file_ext = file_name.split('\.')[1]
+    if(file_ext !== 'jpg' && file_ext !== 'png' && file_ext !=='gif'){
+        return res.status(200).send({msg:"imgaen con formato incorrecto"})
+    }
+    Product.findByIdAndUpdate(productId,{img:file_name}, (err,prodctUpdate) =>{
+        if(err || !prodctUpdate){
+            return res.status(500).send({msg:err})
+        }
+        return res.status(200).send({product:prodctUpdate})
+    })
+}
 module.exports = {
     prueba,
     productos,
     crear,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    updateProductImagen
 }
